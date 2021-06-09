@@ -123,6 +123,7 @@ def updateNotes(newNotes,prevNotes):
 
 def image2midi(image_path):
     with Image.open(image_path) as image:
+        image = np.rot90(image)
         im_arr = np.fromstring(image.tobytes(), dtype=np.uint8)
         try:
             im_arr = im_arr.reshape((image.size[1], image.size[0]))
@@ -172,4 +173,5 @@ def image2midi(image_path):
 
     midi_stream = stream.Stream(output_notes)
 
-    midi_stream.write('midi', fp=image_path.split("/")[-1].replace(".png",".mid"))
+    midi_stream.write('midi', fp=os.path.join(
+        '../results/', image_path.split("/")[-1].replace(".png", ".mid")))
